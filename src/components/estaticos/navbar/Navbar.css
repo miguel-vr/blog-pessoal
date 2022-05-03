@@ -1,0 +1,36 @@
+.cursor {
+  cursor: pointer !important;
+ 
+  
+
+}
+.logo{
+  color: rgb(0, 0, 0);
+}
+
+.icons{
+  color: rgb(255, 255, 255) !important;
+  font-size: 50px !important;
+}
+
+.icon1:hover, .icon2:hover, .icon3:hover, .icon4:hover, .icon5:hover {
+  border-bottom: 1px solid rgba(255, 255, 255, 0.68) !important;
+}
+.text-decorator-none {
+  color: rgb(255, 255, 255) !important;
+  text-decoration: none !important;
+}
+
+
+.tool {
+  background-color: #3F51B5 !important;
+  justify-content: space-between !important;
+  margin-left: 50px !important;
+  margin-right: 30px !important;  
+}
+
+.links{
+  color: white !important;
+  text-decoration: none !important;
+
+}
