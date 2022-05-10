@@ -7,6 +7,7 @@ import { useSelector } from 'react-redux';
 import { TokenState } from '../../../store/tokens/tokensReducer';
 import { useDispatch } from "react-redux";
 import { addToken } from '../../../store/tokens/actions';
+import { toast } from 'react-toastify';
 
 function Navbar() {
     const token = useSelector<TokenState, TokenState["tokens"]>(
@@ -17,7 +18,16 @@ function Navbar() {
 
     function goLogout() {
         dispatch(addToken(''));
-        alert("Usuário deslogado")
+        toast.info('Usuário deslogado', {
+            position: "top-right",
+            autoClose: 2000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: false,
+            draggable: false,
+            theme: "colored",
+            progress: undefined,
+        });
         navigate('/login')
     }
 
@@ -25,46 +35,53 @@ function Navbar() {
 
     if (token != "") {
         navbarComponent = <AppBar position="static">
-            <Toolbar className="tool" variant="dense">
-                <Box className='cursor logo' style={{ cursor: "pointer" }} >
-                    <Typography variant="h5" >
-                        Logo
+            <Toolbar variant="dense">
+                <Box className='cursor'>
+                    <Typography variant="h5" color="inherit">
+                        BlogPessoal
                     </Typography>
                 </Box>
 
-                <Box className="icons" display="flex" justifyContent="start">
-                    <Box className='cursor icon1' mx={2}>
-                        <Typography variant="h6">
-                            Home
-                        </Typography>
-                    </Box>
-                    <Box className='cursor icon2' mx={2} >
-                        <Typography variant="h6" >
-                            Postagens
-                        </Typography>
-                    </Box>
-                    <Box className='cursor icon3' mx={2}>
-                        <Typography variant="h6" >
-                            Temas
-                        </Typography>
-                    </Box>
-                    <Box className='cursor icon4' mx={2}>
-                        <Typography variant="h6">
-                            Cadastrar tema
-                        </Typography>
-                    </Box>
-                    <Link to="/login" className="text-decorator-none" >
-                        <Box className='cursor icon5' mx={2} >
-                            <Typography variant="h6">
-                                Logout
+                <Box display="flex" justifyContent="start">
+                    <Link to="/home" className="text-decorator-none">
+                        <Box mx={1} className='cursor'>
+                            <Typography variant="h6" color="inherit">
+                                home
                             </Typography>
                         </Box>
                     </Link>
+                    <Link to="/posts" className="text-decorator-none">
+                        <Box mx={1} className='cursor'>
+                            <Typography variant="h6" color="inherit">
+                                postagens
+                            </Typography>
+                        </Box>
+                    </Link>
+                    <Link to="/temas" className="text-decorator-none">
+                        <Box mx={1} className='cursor'>
+                            <Typography variant="h6" color="inherit">
+                                temas
+                            </Typography>
+                        </Box>
+                    </Link>
+                    <Link to="/formularioTema" className="text-decorator-none">
+                        <Box mx={1} className='cursor'>
+                            <Typography variant="h6" color="inherit">
+                                cadastrar tema
+                            </Typography>
+                        </Box>
+                    </Link>
+
+                    <Box mx={1} className='cursor' onClick={goLogout}>
+                        <Typography variant="h6" color="inherit">
+                            logout
+                        </Typography>
+                    </Box>
+
                 </Box>
 
             </Toolbar>
         </AppBar>
-
     }
     return (
         <>
