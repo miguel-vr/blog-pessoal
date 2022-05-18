@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from 'react'
-import { Link, useNavigate } from 'react-router-dom'
+import { Link } from 'react-router-dom'
 import Postagem from '../../../models/Postagem';
 import { busca } from '../../../services/Service'
 import { Box, Card, CardActions, CardContent, Button, Typography } from '@material-ui/core';
 import './ListaPostagem.css';
+import { useNavigate } from 'react-router-dom'
 import { useSelector } from 'react-redux';
 import { TokenState } from '../../../store/tokens/tokensReducer';
 import { toast } from 'react-toastify';
@@ -17,16 +18,15 @@ function ListaPostagem() {
 
   useEffect(() => {
     if (token == "") {
-      toast.error('Você precisa estar logado', {
+      toast.info('Você precisa estar logado!', {
         position: "top-right",
-        autoClose: 2000,
+        autoClose: 5000,
         hideProgressBar: false,
         closeOnClick: true,
-        pauseOnHover: false,
-        draggable: false,
-        theme: "colored",
+        pauseOnHover: true,
+        draggable: true,
         progress: undefined,
-      });
+      })
       navigate("/login")
 
     }
@@ -50,16 +50,16 @@ function ListaPostagem() {
     <>
       {
         posts.map(post => (
-          <Box m={2} >
-            <Card variant="outlined">
+          <Box m={2}>
+            <Card variant="outlined" className="fundopost">
               <CardContent>
-                <Typography color="textSecondary" gutterBottom>
+                <Typography gutterBottom className='corpost'>
                   Postagens
                 </Typography>
-                <Typography variant="h5" component="h2">
+                <Typography variant="h5" component="h2" className="fundopost">
                   {post.titulo}
                 </Typography>
-                <Typography variant="body2" component="p">
+                <Typography variant="body2" component="p" className="colortext">
                   {post.texto}
                 </Typography>
                 <Typography variant="body2" component="p">
@@ -71,14 +71,14 @@ function ListaPostagem() {
 
                   <Link to={`/formularioPostagem/${post.id}`} className="text-decorator-none" >
                     <Box mx={1}>
-                      <Button variant="contained" className="marginLeft" size='small' color="primary" >
+                      <Button variant="contained" className="marginLeft , btn1 " size='small' color="primary" >
                         atualizar
                       </Button>
                     </Box>
                   </Link>
                   <Link to={`/deletarPostagem/${post.id}`} className="text-decorator-none">
                     <Box mx={1}>
-                      <Button variant="contained" size='small' color="secondary">
+                      <Button variant="contained" size='small' className='btn2'>
                         deletar
                       </Button>
                     </Box>

@@ -10,24 +10,26 @@ import { toast } from 'react-toastify';
 
 function DeletarPostagem() {
   let navigate = useNavigate();
-  const { id } = useParams<{ id: string }>();
   const token = useSelector<TokenState, TokenState["tokens"]>(
     (state) => state.tokens
+
   );
+
+  const { id } = useParams<{ id: string }>();
   const [post, setPosts] = useState<Postagem>()
 
+
   useEffect(() => {
-    if (token == "") {
-      toast.error('Você precisa estar logado', {
+    if (token === "") {
+      toast.info('Você precisa estar logado!', {
         position: "top-right",
-        autoClose: 2000,
+        autoClose: 5000,
         hideProgressBar: false,
         closeOnClick: true,
-        pauseOnHover: false,
-        draggable: false,
-        theme: "colored",
+        pauseOnHover: true,
+        draggable: true,
         progress: undefined,
-      });
+      })
       navigate("/login")
 
     }
@@ -54,19 +56,27 @@ function DeletarPostagem() {
         'Authorization': token
       }
     });
-    toast.success('Postagem deletada com sucesso', {
+    toast.info('Postagem deletada com sucesso! ✔', {
       position: "top-right",
-      autoClose: 2000,
+      autoClose: 5000,
       hideProgressBar: false,
       closeOnClick: true,
-      pauseOnHover: false,
-      draggable: false,
-      theme: "colored",
+      pauseOnHover: true,
+      draggable: true,
       progress: undefined,
     });
   }
 
   function nao() {
+    toast.error('Postagem não cadastrada. ❌', {
+      position: "top-right",
+      autoClose: 5000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+    });
     navigate('/posts')
   }
   return (

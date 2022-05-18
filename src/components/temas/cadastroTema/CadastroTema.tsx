@@ -1,63 +1,61 @@
-import React, { useState, useEffect, ChangeEvent } from 'react'
-import { Container, Typography, TextField, Button } from "@material-ui/core"
-import { useNavigate, useParams } from 'react-router-dom'
+import React, { useState, useEffect, ChangeEvent } from "react";
+import { Button, Container, TextField, Typography } from "@material-ui/core"
 import './CadastroTema.css';
+import { useNavigate, useParams } from "react-router-dom";
 import Tema from '../../../models/Tema';
-import { buscaId, post, put } from '../../../services/Service';
-import { useSelector } from 'react-redux';
-import { TokenState } from '../../../store/tokens/tokensReducer';
-import { toast } from 'react-toastify';
+import { buscaId, post, put } from "../../../services/Service";
+import { useSelector } from "react-redux";
+import { TokenState } from "../../../store/tokens/tokensReducer";
+import { toast } from "react-toastify";
 
 
 function CadastroTema() {
+
   let navigate = useNavigate();
   const { id } = useParams<{ id: string }>();
   const token = useSelector<TokenState, TokenState["tokens"]>(
     (state) => state.tokens
   );
+
   const [tema, setTema] = useState<Tema>({
     id: 0,
     descricao: ''
   })
 
   useEffect(() => {
-    if (token == "") {
-      toast.error('Você precisa estar logado', {
+    if (token === '') {
+      toast.error('Você precisa estar logado!', {
         position: "top-right",
         autoClose: 2000,
         hideProgressBar: false,
         closeOnClick: true,
         pauseOnHover: false,
         draggable: false,
-        theme: "colored",
+        theme: 'colored',
         progress: undefined,
       });
-      navigate("/login")
-
+      navigate('/login')
     }
   }, [token])
 
+  async function findById(id: String) {
+    buscaId(`/temas/${id}`, setTema, {
+      headers: {
+        'Authorization': token
+      }
+    })
+  }
   useEffect(() => {
     if (id !== undefined) {
       findById(id)
     }
   }, [id])
 
-  async function findById(id: string) {
-    buscaId(`/tema/${id}`, setTema, {
-      headers: {
-        'Authorization': token
-      }
-    })
-  }
-
   function updatedTema(e: ChangeEvent<HTMLInputElement>) {
-
     setTema({
       ...tema,
       [e.target.name]: e.target.value,
     })
-
   }
 
   async function onSubmit(e: ChangeEvent<HTMLFormElement>) {
@@ -66,40 +64,39 @@ function CadastroTema() {
 
     if (id !== undefined) {
       console.log(tema)
-      put(`/tema`, tema, setTema, {
+      put(`/temas`, tema, setTema, {
         headers: {
           'Authorization': token
         }
       })
-      toast.success('Tema atualizado com sucesso', {
+      toast.success('O Tema foi atualizado com sucesso!', {
         position: "top-right",
         autoClose: 2000,
         hideProgressBar: false,
         closeOnClick: true,
         pauseOnHover: false,
         draggable: false,
-        theme: "colored",
+        theme: 'colored',
         progress: undefined,
       });
     } else {
-      post(`/tema`, tema, setTema, {
+      post(`/temas`, tema, setTema, {
         headers: {
           'Authorization': token
         }
       })
-      toast.success('Tema cadastrado com sucesso', {
+      toast.success('O Tema fio cadastrado com sucesso!', {
         position: "top-right",
         autoClose: 2000,
         hideProgressBar: false,
         closeOnClick: true,
         pauseOnHover: false,
         draggable: false,
-        theme: "colored",
+        theme: 'colored',
         progress: undefined,
       });
     }
     back()
-
   }
 
   function back() {
@@ -107,16 +104,17 @@ function CadastroTema() {
   }
 
   return (
-    <Container maxWidth="sm" className="topo">
+    <Container maxWidth='sm' className='topo'>
       <form onSubmit={onSubmit}>
-        <Typography variant="h3" color="textSecondary" component="h1" align="center" >Formulário de cadastro tema</Typography>
-        <TextField value={tema.descricao} onChange={(e: ChangeEvent<HTMLInputElement>) => updatedTema(e)} id="descricao" label="descricao" variant="outlined" name="descricao" margin="normal" fullWidth />
-        <Button type="submit" variant="contained" color="primary">
+        <Typography variant='h3' color='textSecondary' component="h1" align='center'>Formulário</Typography>
+        <TextField value={tema.descricao} onChange={(e: ChangeEvent<HTMLInputElement>) => updatedTema(e)} id='descricao' label='descricao' variant='outlined' name='descricao' />
+        <Button type='submit' variant='contained' color='primary'>
           Finalizar
         </Button>
       </form>
+
     </Container>
   )
 }
 
-export default CadastroTema;
+export default CadastroTema

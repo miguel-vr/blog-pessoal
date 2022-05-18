@@ -73,4 +73,4 @@ function ModalPostagem() {
     </div>
   );
 }
-export default ModalPostagem;
+export default ModalPostagem
